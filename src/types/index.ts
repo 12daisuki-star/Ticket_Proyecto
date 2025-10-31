@@ -1,7 +1,7 @@
 // src/types.ts
 export type Status = 'nuevo' | 'en_atencion' | 'pausado' | 'resuelto' | 'finalizado';
 export type Priority = 'baja' | 'media' | 'alta' | 'critica';
-export type ModuleCode = 'SCP' | 'CENTURA' | 'WEB';
+export type ModuleCode = 'SCP' | 'CENTURA' | 'WEB' | 'SOPORTE TI';
 
 export type User = {
   id: string;

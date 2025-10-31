@@ -33,7 +33,7 @@ export default function Login() {
           <input placeholder="Contraseña" type="password" value={password} onChange={(e)=>setPassword(e.target.value)} />
           {error && <div className="muted" role="alert" aria-live="assertive" style={{color:'#b30c14'}}>{error}</div>}
           <button className="btn primary" disabled={loading}>{loading?'Ingresando...':'Ingresar'}</button>
-          <div className="muted">Demo: <strong>user</strong> o <strong>agente</strong> / <strong>123456</strong></div>
+          {/* <div className="muted">Demo: <strong>user</strong> o <strong>agente</strong> / <strong>123456</strong></div> */}
         </div>
       </form>
     </div>

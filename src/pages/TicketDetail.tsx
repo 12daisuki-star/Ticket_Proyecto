@@ -5,7 +5,7 @@ import { addNote, listNotes } from '@/services/notes'
 import type { Note, Ticket } from '@/types' 
 import { useAuth } from '@/context/AuthContext'
 import type { Attachment } from '@/types';
-import { listAttachments } from '@/services/attachments';
+import { listAttachments, downloadAttachment } from '@/services/attachments';
 
 
 
@@ -43,7 +43,7 @@ export default function TicketDetail() {
       setNotes(ns);
 
       setAttLoading(true);
-      const atts = await listAttachments(id);
+      const atts = await listAttachments(id);      
       setAttachments(atts);
     } catch (err:any) {
       setMsg(err?.message || 'No se pudo cargar el ticket');
@@ -139,19 +139,19 @@ export default function TicketDetail() {
             {attachments.map(a => (
               <li key={a.id} style={{marginBottom:'.35rem'}}>
                 <div style={{display:'flex', alignItems:'center', gap:'.5rem', flexWrap:'wrap'}}>
-                  {/* <a
-                    href={getAttachmentDownloadUrl(a.attachmentId)}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  {/* ❌ <a href={getAttachmentDownloadUrl(a.id)} ...> */}
+                  {/* ✅ Botón que descarga con Authorization via XHR */}
+                  <button
                     className="link"
-                    title={`Descargar ${a.originalName}`}
+                    title={`Descargar ${a.fileName}`}
+                    onClick={() => downloadAttachment(a.id, a.fileName)}
                   >
-                    {a.originalName}
-                  </a> */}
-                  {a.fileName}
-                  <span className="muted">• {formatBytes(a.size)}</span>
-                  <span className="muted">• {new Date(a.CreatedAt).toLocaleString()}</span>
-                  <span className="pill">{a.contentType}</span>
+                    {a.fileName}
+                  </button>
+
+                  {typeof a.size === 'number' && <span className="muted">• {formatBytes(a.size)}</span>}
+                  {typeof a.CreatedAt === 'string' && <span className="muted">• {new Date(a.CreatedAt).toLocaleString()}</span>}
+                  {a.contentType && <span className="pill">{a.contentType}</span>}
                 </div>
               </li>
             ))}
